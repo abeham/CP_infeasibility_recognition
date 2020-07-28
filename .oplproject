@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+	<version>1.0</version>
+	<description>The CP Optimizer in CPLEX 12.10 does not detect model infeasibility fast enough</description>
+	<configs>
+		<config default="true" name="Konfiguration 1" category="opl">
+			<ref name="CP_badCase.mod" type="model">
+			</ref>
+		</config>
+	</configs>
+	
+</project>
