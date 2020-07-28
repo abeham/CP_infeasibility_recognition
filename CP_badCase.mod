@@ -26,4 +26,7 @@ subject to {
   lengthOf(activityA2) >= 1;
   
   util <= 1;
+  
+  // adding the following constraint, CP identifies the infeasibility quickly
+  //startOf(activityA1) == startOf(activityA2);
 }
