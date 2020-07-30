@@ -6,27 +6,23 @@
 
 using CP;
 
-dvar interval activityA;
-dvar interval activityA1;
-dvar interval activityA2;
+range T = 1..3;
+
+dvar interval start;
+dvar interval A[T];
 dvar interval end;
 
-cumulFunction util = pulse(activityA1, 1) + pulse(activityA2, 1);
+cumulFunction util = sum(t in T) (pulse(A[t], 1));
  
 minimize endOf(end);
 
 subject to {
-  endAtStart(activityA, activityA1);
-  endAtStart(activityA, activityA2);
-  endBeforeStart(activityA1, end);
-  endBeforeStart(activityA2, end);
+  forall (t in T)(endAtStart(start, A[t]));
+  forall (t in T)(endBeforeStart(A[t], end));
+  forall (t in T)(lengthOf(A[t]) >= 1);
   
-  lengthOf(activityA) >= 1;
-  lengthOf(activityA1) >= 1;
-  lengthOf(activityA2) >= 1;
+  util <= 2;
   
-  util <= 1;
-  
-  // adding the following constraint, CP identifies the infeasibility quickly
-  //startOf(activityA1) == startOf(activityA2);
+  // even adding the following constraints, CP solver does not recognize infeasibility
+  forall (t in T, k in T: t < k) startAtStart(A[t], A[k]);
 }
